@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
-/* * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-} */
+@custom-variant dark (&:where(.dark, .dark *));
+
+* {
+    @apply transition-colors duration-200;
+}

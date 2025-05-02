@@ -1,5 +1,8 @@
+import { RouterProvider } from "react-router";
+import router from "./Routing";
+
 const App = () => {
-	return <>MailCulator</>;
+	return <RouterProvider router={router} />;
 };
 
 export default App;
