@@ -137,7 +137,7 @@ const StandardCalculator = () => {
 	return (
 		<div className="flex flex-col items-center justify-center w-full h-full  rounded-lg shadow-lg">
 			{/* Display Result */}
-			<div className="flex flex-col items-center justify-end w-full h-full  rounded-lg shadow-lg p-4">
+			<div className="flex flex-col items-start justify-around w-full h-full  rounded-lg shadow-lg p-4">
 				<div className="w-full h-fit flex-col items-center justify-start mb-2">
 					<label htmlFor="note" className="text-lg font-semibold ml-1">
 						Note:
