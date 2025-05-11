@@ -3,6 +3,7 @@ import "./styles/removeArrows.css";
 import { create, all } from "mathjs";
 import { useDispatch } from "react-redux";
 import { addToCalculations } from "../redux/calculationsSlice.js";
+import toast from "react-hot-toast";
 
 const StandardCalculator = () => {
 	const dispatch = useDispatch();
@@ -39,7 +40,10 @@ const StandardCalculator = () => {
 				const trimmed = expression.trim();
 
 				if (trimmed === "" || trimmed === "0") {
-					alert("Empty expression can't be evaluated.");
+					// alert("Empty expression can't be evaluated.");
+					toast.error("Empty expression can't be evaluated.", {
+						duration: 2000,
+					});
 					return;
 				}
 
@@ -135,11 +139,14 @@ const StandardCalculator = () => {
 	}, [expression, note, result]);
 
 	return (
-		<div className="flex flex-col items-center justify-center w-full h-full  rounded-lg shadow-lg">
+		<div className="flex flex-col md:items-center md:justify-start w-full h-fit md:h-full   rounded-lg shadow-lg">
 			{/* Display Result */}
-			<div className="flex flex-col items-start justify-around w-full h-full  rounded-lg shadow-lg p-4">
-				<div className="w-full h-fit flex-col items-center justify-start mb-2">
-					<label htmlFor="note" className="text-lg font-semibold ml-1">
+			<div className="flex flex-col items-start w-full rounded-lg shadow-lg p-3 sm:p-4 bg-white dark:bg-gray-800">
+				<div className="w-full flex-col items-start mb-3 sm:mb-4">
+					<label
+						htmlFor="note"
+						className="text-base sm:text-lg font-semibold ml-1 block mb-1"
+					>
 						Note:
 					</label>
 					<input
@@ -151,41 +158,43 @@ const StandardCalculator = () => {
 						onChange={(e) => setNote(e.target.value)}
 						placeholder="Add a Note for this calculation"
 						dir="ltr"
-						className="w-full h-18 text-2xl focus:outline-none outline-blue-600 caret-blue-600 border-2 p-2 rounded-lg font-semibold placeholder-gray-400 dark:placeholder-white/70  no-arrows"
+						className="w-full h-12 sm:h-14 text-lg sm:text-2xl focus:outline-none outline-blue-600 caret-blue-600 border-2 p-2 rounded-lg font-semibold placeholder-gray-400 dark:placeholder-white/70 no-arrows"
 					/>
-					<p dir="rtl" className="text-[12px] text-gray-500 dark:text-white/70">
-						Press Enter to add to history
+					<p className="text-xs text-shadow-md text-right mt-1 text-gray-500 dark:text-white/70">
+						Press Enter to save calculation
 					</p>
 				</div>
-				<input
-					type="text"
-					id="expression"
-					name="expression"
-					value={expression}
-					readOnly
-					placeholder="Expression"
-					dir="rtl"
-					className="w-full h-22 text-4xl focus:outline-none font-semibold text-gray-900 dark:text-white mb-2 placeholder-gray-400 dark:placeholder-white/70  no-arrows"
-				/>
-				{/* <input
-					type="text"
-					value={result}
-					disabled
-					placeholder="Result"
-					dir="rtl"
-					className="w-full text-shadow-lg h-22 text-6xl focus:outline-none font-bold text-gray-900 dark:text-white  no-arrows"
-                    /> */}
-				<p
-					dir="rtl"
-					className="w-full text-shadow-lg h-20 text-6xl focus:outline-none font-bold text-gray-900 dark:text-white  no-arrows"
+
+				<div
+					className="w-full bg-gray-50 dark:bg-gray-700 rounded-lg p-3 mb-2"
+					onClick={() => {
+						document.getElementById("expression").focus();
+					}}
 				>
-					{result}
-				</p>
+					<input
+						type="text"
+						id="expression"
+						name="expression"
+						value={expression}
+						readOnly
+						placeholder="Expression"
+						dir="rtl"
+						className="w-full text-shadow-lg bg-transparent h-12 sm:h-14 text-2xl sm:text-3xl md:text-4xl focus:outline-none font-semibold text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-white/70 no-arrows"
+					/>
+					<div className="w-full mt-2">
+						<p
+							dir="rtl"
+							className="w-full text-shadow-lg min-h-14 sm:min-h-16 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white truncate"
+						>
+							{result || "0"}
+						</p>
+					</div>
+				</div>
 			</div>
 
 			<div
 				tabIndex={0}
-				className="flex flex-col items-center justify-center w-full h-full  rounded-lg shadow-lg p-4 mt-2"
+				className="flex flex-col items-center  w-full h-fit  rounded-lg shadow-lg p-4 mt-2"
 			>
 				{keypad.map((row, rowIndex) => (
 					<div
@@ -199,7 +208,7 @@ const StandardCalculator = () => {
 									key === "="
 										? "absolute top-0 h-full bg-cyan-500 hover:bg-cyan-600"
 										: "h-16"
-								} 
+								}
                                 ${
 																	key === "AC"
 																		? "bg-red-500 hover:bg-red-600"
@@ -209,8 +218,8 @@ const StandardCalculator = () => {
 																	["/", "*", "-", "+", "<="].includes(key)
 																		? "bg-gray-700 hover:bg-gray-800"
 																		: "bg-blue-500"
-																} 
-                                text-4xl text-shadow-lg flex items-center justify-center w-full 
+																}
+                                text-2xl md:text-4xl text-shadow-lg flex items-center justify-center w-full
                                 text-white font-bold rounded-lg shadow-md hover:bg-blue-600 transition duration-200 ease-in-out`}
 								style={
 									key === "="

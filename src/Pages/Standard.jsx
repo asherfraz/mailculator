@@ -205,6 +205,7 @@ import {
 import toast from "react-hot-toast";
 import { Link } from "react-router";
 import { useNavbar } from "../Context/NavbarContext";
+import { HistorySender } from "../Components/HistorySender";
 
 const Standard = () => {
 	const { theme, toggleTheme } = useTheme();
@@ -213,6 +214,12 @@ const Standard = () => {
 	// const [showMenu, setShowMenu] = useState(false);
 	// const [showHistory, setShowHistory] = useState(false);
 	const { showMenu, showHistory, setShowMenu, setShowHistory } = useNavbar();
+
+	// Send as Email Modal / WA
+	const [senderModal, setSenderModal] = useState(false);
+	const openSenderModal = () => setSenderModal(true);
+	const closeSenderModal = () => setSenderModal(false);
+	const [sendTo, setSendTo] = useState("email");
 
 	const handleDelete = (id) => {
 		dispatch(removeFromCalculations(id));
@@ -304,7 +311,13 @@ const Standard = () => {
 								</>
 							)}
 						</button>
-						<button className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600">
+						<button
+							className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600"
+							onClick={() => {
+								openSenderModal();
+								setSendTo("email");
+							}}
+						>
 							Send as E-mail
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -321,7 +334,13 @@ const Standard = () => {
 								/>
 							</svg>
 						</button>
-						<button className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600">
+						<button
+							className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600"
+							onClick={() => {
+								openSenderModal();
+								setSendTo("whatsapp");
+							}}
+						>
 							Send as Whatsapp
 							<svg
 								role="img"
@@ -500,7 +519,9 @@ const Standard = () => {
 						<button
 							className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-2 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600"
 							onClick={() => {
-								alert("This feature is not available yet.");
+								// alert("This feature is not available yet.");
+								openSenderModal();
+								setSendTo("email");
 							}}
 						>
 							Send as E-mail
@@ -522,7 +543,9 @@ const Standard = () => {
 						<button
 							className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-2 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600"
 							onClick={() => {
-								alert("This feature is not available yet.");
+								// alert("This feature is not available yet.");
+								openSenderModal();
+								setSendTo("whatsapp");
 							}}
 						>
 							Send as Whatsapp
@@ -619,6 +642,14 @@ const Standard = () => {
 					)}
 				</div>
 			</div>
+
+			{senderModal && (
+				<HistorySender
+					open={senderModal}
+					close={closeSenderModal}
+					sendTo={sendTo}
+				/>
+			)}
 		</div>
 	);
 };

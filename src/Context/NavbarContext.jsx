@@ -10,9 +10,6 @@ export const NavbarProvider = ({ children }) => {
 	const toggleMenu = () => setShowMenu((prev) => !prev);
 	const toggleHistory = () => setShowHistory((prev) => !prev);
 
-	console.log("Menu: ", showMenu);
-	console.log("History: ", showHistory);
-
 	// Close both
 	const closeAll = () => {
 		setShowMenu(false);
