@@ -497,7 +497,12 @@ const Standard = () => {
 								</>
 							)}
 						</button>
-						<button className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-2 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600">
+						<button
+							className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-2 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600"
+							onClick={() => {
+								alert("This feature is not available yet.");
+							}}
+						>
 							Send as E-mail
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -514,7 +519,12 @@ const Standard = () => {
 								/>
 							</svg>
 						</button>
-						<button className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-2 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600">
+						<button
+							className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-2 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600"
+							onClick={() => {
+								alert("This feature is not available yet.");
+							}}
+						>
 							Send as Whatsapp
 							<svg
 								role="img"
