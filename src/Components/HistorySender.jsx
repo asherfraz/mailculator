@@ -2,8 +2,6 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import emailjs from "@emailjs/browser";
-import dotenv from "dotenv";
-// dotenv.config();
 
 export const HistorySender = ({ open, close, sendTo }) => {
 	const [emailTo, setEmailTo] = useState("");
@@ -132,7 +130,7 @@ export const HistorySender = ({ open, close, sendTo }) => {
 				});
 			}
 		} else if (sendTo === "whatsapp") {
-			const message = `\t\t*MailCulator*\n*-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-*\n${calculationsHistoryTextArea}\n\tSent from Mailculator.vercel.app`;
+			const message = `\t\t*MailCulator*\n_| Send your calculation on e-mail or whatsapp |_\n*-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-*\n\n${calculationsHistoryTextArea}\nSent from Mailculator.vercel.app _by_ asherfraz.com`;
 			const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(
 				message
 			)}`;
