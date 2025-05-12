@@ -1,11 +1,20 @@
+import { useState } from "react";
+import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
+import emailjs from "@emailjs/browser";
+import dotenv from "dotenv";
+// dotenv.config();
 
 export const HistorySender = ({ open, close, sendTo }) => {
-	if (!open) return null;
+	const [emailTo, setEmailTo] = useState("");
 
 	const calculationsHistory = useSelector(
 		(state) => state.calculations.calculation
 	);
+
+	// Checks
+	if (!open) return null;
+
 	const calculationsHistoryString = calculationsHistory
 		.map((item, index) => {
 			const date = new Date(item.id);
@@ -17,16 +26,20 @@ export const HistorySender = ({ open, close, sendTo }) => {
 				minute: "2-digit",
 				hour12: true,
 			});
-			return `Index:\t${index + 1}
-Date:\t${formattedDate}
-Title:\t${item.note}
-Calculation:\t ${item.expression} = ${item.result}\n
---------------------------------------\n`;
+			return `Index:\t${index + 1}\nDate:\t${formattedDate}\nTitle:\t${
+				item.note
+			}\nCalculation:\t ${item.expression} = ${
+				item.result
+			}\n\n--------------------------------------\n`;
 		})
 		.join("\n");
-	console.log("History: ", calculationsHistory);
-	console.log("1.", calculationsHistoryString);
-	console.log("2.", calculationsHistory.length);
+
+	const [calculationsHistoryTextArea, setCalculationsHistoryTextArea] =
+		useState(calculationsHistoryString);
+
+	// console.log("\n\nHistory: ", calculationsHistory);
+	// console.log("1.", calculationsHistoryString);
+	// console.log("2.", calculationsHistory.length);
 
 	const requireEmail = () => {
 		return sendTo.trim() === "email" ? (
@@ -38,11 +51,94 @@ Calculation:\t ${item.expression} = ${item.result}\n
 					type="text"
 					id="recipient"
 					required
+					value={emailTo}
+					onChange={(e) => {
+						setEmailTo(e.target.value);
+					}}
 					className="border border-gray-300 dark:border-gray-600 rounded-lg p-2 w-full"
 					placeholder={sendTo === "email" ? "Email Address" : null}
 				/>
 			</div>
 		) : null;
+	};
+
+	const handleShare = async () => {
+		if (sendTo === "email") {
+			const recipient = document.getElementById("recipient");
+			if (!recipient.value) {
+				toast.error("Please enter a recipient email address.", {
+					duration: 3000,
+					style: {
+						background: "#333",
+						color: "#fff",
+					},
+				});
+				recipient.focus();
+				return;
+			}
+
+			// Basic email validation
+			const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+			if (!emailRegex.test(emailTo)) {
+				toast.error("Please enter a valid email address.", {
+					duration: 3000,
+					style: {
+						background: "#333",
+						color: "#fff",
+					},
+				});
+				recipient.style.borderColor = "red";
+				recipient.style.boxShadow = "0 0 5px red";
+				recipient.focus();
+				return;
+			}
+			// Notify the user
+			// toast.error("Sorry - This feature is currently in development phase!", {
+			// 	duration: 3000,
+			// 	style: {
+			// 		background: "#333",
+			// 		color: "#fff",
+			// 		textAlign: "center",
+			// 	},
+			// });
+
+			const emailResult = await emailjs.send(
+				import.meta.env.VITE_EMAILJS_SERVICE_ID,
+				import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+				{
+					to_email: emailTo,
+					subject: "Mailculator Calculation History",
+					historyBody: calculationsHistoryTextArea,
+				},
+				import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+			);
+
+			if (emailResult.status === 200) {
+				toast.success("Email sent successfully!", {
+					duration: 3000,
+					style: {
+						background: "#333",
+						color: "#fff",
+					},
+				});
+			} else {
+				console.error("Failed to send email:", emailResult);
+				toast.error("Failed to send email. Please try again later.", {
+					duration: 3000,
+					style: {
+						background: "#333",
+						color: "#fff",
+					},
+				});
+			}
+		} else if (sendTo === "whatsapp") {
+			const message = `\t\t*MailCulator*\n*-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-*\n${calculationsHistoryTextArea}\n\tSent from Mailculator.vercel.app`;
+			const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(
+				message
+			)}`;
+			window.open(url, "_blank");
+		}
+		close();
 	};
 
 	return (
@@ -58,25 +154,9 @@ Calculation:\t ${item.expression} = ${item.result}\n
 							: null}
 					</h2>
 					<p className="text-gray-700 dark:text-gray-200 mb-4">
-						You can now share your calculations via {sendTo}.
+						You can now share your calculations with others via {sendTo}.
 					</p>
 					<div className="flex flex-col space-y-4">
-						{/* {sendTo === "email" ? (
-							<div className="flex items-center space-x-2">
-								<label
-									htmlFor="recipient"
-									className="text-gray-700 dark:text-gray-200"
-								>
-									Recipient:
-								</label>
-								<input
-									type="text"
-									id="recipient"
-									className="border border-gray-300 dark:border-gray-600 rounded-lg p-2 w-full"
-									placeholder={sendTo === "email" ? "Email Address" : null}
-								/>
-							</div>
-						) : null} */}
 						{requireEmail()}
 						<div className="flex flex-col items-start justify-center space-y-2">
 							<label
@@ -90,7 +170,10 @@ Calculation:\t ${item.expression} = ${item.result}\n
 								className={`border border-gray-300 dark:border-gray-600 rounded-lg p-2 w-full h-32 md:h-48
 									lg:h-64 `}
 								placeholder={`Your calculation history...`}
-								value={calculationsHistoryString}
+								value={calculationsHistoryTextArea}
+								onChange={(e) => {
+									setCalculationsHistoryTextArea(e.target.value);
+								}}
 							></textarea>
 						</div>
 					</div>
@@ -98,21 +181,7 @@ Calculation:\t ${item.expression} = ${item.result}\n
 						<button
 							className="px-4 py-2 bg-green-600 hover:bg-green-800 text-white rounded-lg flex items-center"
 							onClick={() => {
-								// Handle send action here
-								console.log("Send button clicked");
-								navigator
-									.share({
-										title: "Calculation History",
-										text: calculationsHistoryString,
-										// url: "https://calculator.com", // Replace with your URL
-									})
-									.then(() => {
-										console.log("Share successful");
-										close();
-									})
-									.catch((error) => {
-										console.error("Error sharing:", error);
-									});
+								handleShare();
 							}}
 						>
 							Send

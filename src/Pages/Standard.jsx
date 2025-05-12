@@ -211,13 +211,22 @@ const Standard = () => {
 	const { theme, toggleTheme } = useTheme();
 	const dispatch = useDispatch();
 	const calculations = useSelector((state) => state.calculations.calculation);
-	// const [showMenu, setShowMenu] = useState(false);
-	// const [showHistory, setShowHistory] = useState(false);
 	const { showMenu, showHistory, setShowMenu, setShowHistory } = useNavbar();
 
 	// Send as Email Modal / WA
 	const [senderModal, setSenderModal] = useState(false);
-	const openSenderModal = () => setSenderModal(true);
+	const openSenderModal = () => {
+		if (calculations.length === 0) {
+			toast.error("No history to send!", {
+				duration: 2000,
+				position: "top-right",
+			});
+			return false;
+		} else {
+			setSenderModal(true);
+		}
+	};
+
 	const closeSenderModal = () => setSenderModal(false);
 	const [sendTo, setSendTo] = useState("email");
 
