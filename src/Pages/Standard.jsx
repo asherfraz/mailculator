@@ -236,8 +236,15 @@ const Standard = () => {
 
 	const menuItems = [
 		{ name: "Standard", path: "/" },
-		{ name: "Scientific [Coming Soon!]", path: "/" },
-		{ name: "Currency [Coming Soon!]", path: "/" },
+		{ name: "Scientific [Coming Soon!]", path: "/", underDevelopment: true },
+		{ name: "Currency [Coming Soon!]", path: "/", underDevelopment: true },
+		{ name: "Length [Coming Soon!]", path: "/", underDevelopment: true },
+		// { name: "Weight [Coming Soon!]", path: "/", underDevelopment: true },
+		// { name: "Area [Coming Soon!]", path: "/", underDevelopment: true },
+		// { name: "Volume [Coming Soon!]", path: "/", underDevelopment: true },
+		// { name: "Time [Coming Soon!]", path: "/", underDevelopment: true },
+		// { name: "Speed [Coming Soon!]", path: "/", underDevelopment: true },
+		// { name: "Temperature [Coming Soon!]", path: "/", underDevelopment: true },
 	];
 
 	return (
@@ -373,7 +380,14 @@ const Standard = () => {
 								key={index}
 								to={item.path}
 								className="flex items-center py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded px-2"
-								onClick={() => setShowMenu(false)}
+								onClick={() => {
+									if (item.underDevelopment) {
+										toast.error("Under Development!", {
+											duration: 2000,
+										});
+									}
+									setShowMenu(false);
+								}}
 							>
 								{index + 1}. {item.name}
 							</Link>
@@ -581,6 +595,15 @@ const Standard = () => {
 							key={index}
 							to={item.path}
 							className="flex flex-col items-start justify-center w-full py-2 border-b dark:border-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 px-2 rounded"
+							onClick={() => {
+								if (item.underDevelopment) {
+									toast.error("Under Development!", {
+										icon: "🚧",
+
+										duration: 2000,
+									});
+								}
+							}}
 						>
 							{index + 1}. {item.name}
 						</Link>

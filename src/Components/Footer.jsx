@@ -5,7 +5,7 @@ const Footer = () => {
 		<footer className="text-gray-600 font-serif dark:bg-gray-800 dark:text-white">
 			<div className="container p-3 mx-auto flex items-center sm:flex-row flex-col border-t-2 border-gray-200">
 				<a className="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
-					<span className="ml-3 text-xl dark:text-white border-y-4 rounded-lg border-amber-300">
+					<span className="ml-3 text-xl dark:text-white border-y-4 rounded-lg border-blue-500">
 						&nbsp; MailCulator &nbsp;
 					</span>
 				</a>

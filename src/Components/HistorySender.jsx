@@ -128,6 +128,7 @@ export const HistorySender = ({ open, close, sendTo }) => {
 						color: "#fff",
 					},
 				});
+				return;
 			}
 		} else if (sendTo === "whatsapp") {
 			const message = `\t\t*MailCulator*\n_| Send your calculation on e-mail or whatsapp |_\n*-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-*\n\n${calculationsHistoryTextArea}\nSent from Mailculator.vercel.app _by_ asherfraz.com`;

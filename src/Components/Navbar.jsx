@@ -1,9 +1,7 @@
 import { useNavbar } from "../Context/NavbarContext";
-import { useTheme } from "../ThemeContext";
 import { Link } from "react-router";
 
 const Navbar = () => {
-	const { theme, toggleTheme } = useTheme();
 	const { showMenu, showHistory, toggleMenu, toggleHistory } = useNavbar();
 
 	return (
@@ -34,7 +32,7 @@ const Navbar = () => {
 						to="/"
 						className="flex title-font font-medium items-center text-gray-900 dark:text-white"
 					>
-						<span className="ml-3 text-2xl border-y-4 rounded-lg border-amber-300">
+						<span className="ml-3 text-2xl border-y-4 rounded-lg border-blue-500">
 							&nbsp; MailCulator &nbsp;
 						</span>
 					</Link>
