@@ -21,26 +21,26 @@ You can try Mailculator by visiting the [live demo at mailculator.vercel.app](ht
 
 ## Screenshots
 <div align="center">
-<img src="./screenshots/main.png" alt="Screentshot 1" width="600px">
+<img src="./Sscreenshots/main.png" alt="Screentshot 1" width="600px">
 <br/>
 Main Calculator
 <br/>
 <table>
 <tr> 
-    <td><img src="./screenshots/sendasemail.png" alt="Screentshot 1" width="600px">
+    <td><img src="./Sscreenshots/sendasemail.png" alt="Screentshot 1" width="600px">
 <br/>
 Send Calculations as Email</td>
-    <td><img src="./screenshots/emailresult.png" alt="Screentshot 1" width="600px">
+    <td><img src="./Sscreenshots/emailresult.png" alt="Screentshot 1" width="600px">
 <br/>
 Email Received</td>
 </tr>
 </table>
 <table>
 <tr> 
-    <td><img src="./screenshots/sendaswhatsapp.png" alt="Screentshot 1" width="600px">
+    <td><img src="./Sscreenshots/sendaswhatsapp.png" alt="Screentshot 1" width="600px">
 <br/>
 Send Calculations as Whatsapp</td>
-    <td><img src="./screenshots/whatsappresult.jpg" alt="Screentshot 1" width="600px">
+    <td><img src="./Sscreenshots/whatsappresult.jpg" alt="Screentshot 1" width="600px">
 <br/>
 Whatsapp Message Received</td>
 </tr>
